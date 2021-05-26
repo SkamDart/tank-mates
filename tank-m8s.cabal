@@ -1,7 +1,7 @@
 cabal-version:       2.4
 name:                tank-m8s
 version:             0.1.0.0
-synopsis:            Servant based backend for Tank Mates
+synopsis:            Scotty based backend for TankMates App
 license:             NONE
 license-file:        LICENSE
 author:              Cameron Dart
@@ -9,19 +9,38 @@ maintainer:          cdart2@illinois.edu
 category:            Web
 extra-source-files:  CHANGELOG.md
 
-executable tank-buddies
+executable tank-mates
   main-is:             Main.hs
   build-depends:       base ^>=4.14.1.0
                      , aeson
-					 , http-client
-                     , servant
-                     , servant-client-core
-                     , servant-client
-                     , servant-server
-					 , sqlite-simple
-					 , transformers
+                     , async
+                     , http-client
+                     , mates
+                     , scotty
+                     , sqlite-simple
+                     , transformers
                      , wai
                      , warp
   hs-source-dirs:      app
   default-language:    Haskell2010
-
+  ghc-options:         -O2
+                       -threaded
+                       -rtsopts
+                       -with-rtsopts=-A1024M
+library mates
+  exposed-modules:     TankMates.User
+                     , TankMates.Tank
+                     , TankMates.Mate
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  build-depends:       base ^>=4.14.1.0
+                     , aeson
+                     , async
+                     , http-client
+                     , scotty
+                     , sqlite-simple
+                     , time
+                     , text
+                     , transformers
+                     , wai
+                     , warp

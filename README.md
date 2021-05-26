@@ -1,2 +1,2 @@
 # TankMates
-Servant based backend for the tank-m8s app
+Scotty based backend for the tank-m8s app
