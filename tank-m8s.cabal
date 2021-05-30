@@ -38,6 +38,7 @@ library mates
                      , aeson
                      , async
                      , http-client
+                     , http-types
                      , scotty
                      , sqlite-simple
                      , time
