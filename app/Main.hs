@@ -5,6 +5,7 @@ import Data.Maybe (fromMaybe)
 import Data.Monoid (mconcat)
 
 import TankMates (routes)
+import TankMates.DB (lookupOrDefault)
 
 import Text.Read
 
@@ -16,7 +17,8 @@ import Web.Scotty.Trans (scottyT)
 main :: IO ()
 main = do
   port <- findPort
-  scotty port routes
+  db <- lookupOrDefault
+  scotty port (routes db)
 
 findPort :: IO Int
 findPort = do

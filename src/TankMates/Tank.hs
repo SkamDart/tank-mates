@@ -16,6 +16,7 @@ import GHC.Generics
 
 import Network.HTTP.Types.Status
 
+import TankMates.DB
 import TankMates.Mate
 import TankMates.User
 
@@ -39,27 +40,25 @@ data TankRequest = TankRequest { tankRequestTankId :: Text
 instance ToJSON TankRequest
 instance FromJSON TankRequest
 
-fetchTank :: T.Text -> IO [Mate]
--- fetchTank tid = undefined
-fetchTank _ = do
+fetchTank :: DB -> T.Text -> IO [Mate]
+fetchTank db _ = do
   pure [Fish]
 
-postTank :: TankRequest -> IO Bool
-postTank tr = do
+postTank :: DB -> TankRequest -> IO Bool
+postTank db tr = do
   putStrLn ("Posted " ++ show tr)
   pure True
 
-routes :: ScottyM ()
-routes = do
+routes :: DB -> ScottyM ()
+routes db = do
   post "/api/tank" $ do
-    -- TODO
     -- tr :: TankRequest <- jsonData `rescue` text 
     tr :: TankRequest <- jsonData
-    d <- liftIO $ postTank tr
+    d <- liftIO (postTank db tr)
     json $ T.pack "success"
 
   get "/api/tank/:id" $ do
     tid <- param "id"
-    mates <- liftIO $ fetchTank tid
+    mates <- liftIO (fetchTank db tid)
     json mates
 
